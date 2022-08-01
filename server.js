@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
-const PORT = 2121
+const PORT = 27017
 require('dotenv').config()
 
 
@@ -14,7 +14,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
     })
-    
+
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -31,7 +31,7 @@ app.get('/',(request, response)=>{
 
 app.post('/addRapper', (request, response) => {
     db.collection('rappers').insertOne({stageName: request.body.stageName,
-    birthName: request.body.birthName, likes: 0})
+    birthName: request.body.birthName, likes: 0}) //gets put into database
     .then(result => {
         console.log('Rapper Added')
         response.redirect('/')
